@@ -71,6 +71,8 @@ flutter:
     - images/profile-picture.png
     - images/user-profile-left.png
     - images/user-profile-right.png
+    - lib/assets/mastercard.png
+    - lib/assets/visa.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
