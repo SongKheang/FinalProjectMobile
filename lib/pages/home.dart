@@ -1,5 +1,7 @@
+import 'package:first_app/pages/productDetail.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// ignore: unnecessary_import
+import 'package:flutter/cupertino.dart'; // ADD THIS LINE
 
 void main() {
   runApp(MaterialApp(
@@ -66,6 +68,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -80,6 +83,7 @@ class HomePage extends StatelessWidget {
                 FilterChip(label: const Text('Classics'), onSelected: (_) {}),
               ],
             ),
+
             const SizedBox(height: 16),
             Expanded(
               child: GridView.count(
@@ -156,7 +160,21 @@ class FoodCard extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return GestureDetector( // Wrap with GestureDetector for tap handling
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetails( // Navigate to ProductDetails page
+              title: title,
+              imageUrl: imageUrl,
+              subtitle: subtitle,
+              rating: rating,
+            ),
+          ),
+        );
+      },
+      child: Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,6 +212,7 @@ class FoodCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }
