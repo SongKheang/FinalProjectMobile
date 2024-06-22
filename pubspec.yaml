@@ -66,6 +66,11 @@ flutter:
     - assets/apple-fill.png
     - assets/pngwing 2.png
     - assets/backarrow.png
+    - images/frontpage-1.png
+    - images/frontpage-2.png
+    - images/profile-picture.png
+    - images/user-profile-left.png
+    - images/user-profile-right.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -79,7 +84,7 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
@@ -90,6 +95,9 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
+  - family: Lobster
+      fonts:
+        - asset: fonts/Lobster-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
