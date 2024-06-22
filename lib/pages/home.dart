@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+void main() {
+  runApp(MaterialApp(
+    home: const HomePage(),
+    routes: {
+      '/home': (context) => const HomePage(),
+    },
+  ));
+}
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -18,9 +27,9 @@ class HomePage extends StatelessWidget {
         ),
         actions: const [
           CircleAvatar(
-            backgroundImage: NetworkImage('https://placehold.co/50x50'),
+            backgroundImage: AssetImage('assets/images/user.png'),
           ),
-          SizedBox(width: 10),
+          SizedBox(width: 15),
         ],
         // backgroundColor: Colors.white,
         // centerTitle: true,
@@ -39,7 +48,6 @@ class HomePage extends StatelessWidget {
         //   ),
         // ),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -61,7 +69,12 @@ class HomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                FilterChip(label: const Text('All'), onSelected: (_) {}),
+                FilterChip(
+                  label: const Text('All'), 
+                  backgroundColor: Colors.red,
+                  labelStyle: const TextStyle(color: Colors.white), 
+                  onSelected: (_) 
+                  {}),
                 FilterChip(label: const Text('Combos'), onSelected: (_) {}),
                 FilterChip(label: const Text('Sliders'), onSelected: (_) {}),
                 FilterChip(label: const Text('Classics'), onSelected: (_) {}),
@@ -75,25 +88,37 @@ class HomePage extends StatelessWidget {
                 mainAxisSpacing: 16,
                 children: const [
                   FoodCard(
-                    imageUrl: 'https://placehold.co/100x100',
+                    imageUrl: 'assets/images/image_3.png',
                     title: 'Cheeseburger',
-                    subtitle: 'Wendy\'s Burger',
+                    subtitle: 'Wendy Burger',
                     rating: 4.9,
                   ),
                   FoodCard(
-                    imageUrl: 'https://placehold.co/100x100',
+                    imageUrl: 'assets/images/image_4.png',
                     title: 'Hamburger',
                     subtitle: 'Veggie Burger',
                     rating: 4.8,
                   ),
                   FoodCard(
-                    imageUrl: 'https://placehold.co/100x100',
+                    imageUrl: 'assets/images/image_5.png',
                     title: 'Hamburger',
                     subtitle: 'Chicken Burger',
                     rating: 4.6,
                   ),
                   FoodCard(
-                    imageUrl: 'https://placehold.co/100x100',
+                    imageUrl: 'assets/images/image_6.png',
+                    title: 'Hamburger',
+                    subtitle: 'Fried Chicken Burger',
+                    rating: 4.5,
+                  ),
+                  FoodCard(
+                    imageUrl: 'assets/images/image_5.png',
+                    title: 'Hamburger',
+                    subtitle: 'Chicken Burger',
+                    rating: 4.6,
+                  ),
+                  FoodCard(
+                    imageUrl: 'assets/images/image_6.png',
                     title: 'Hamburger',
                     subtitle: 'Fried Chicken Burger',
                     rating: 4.5,
@@ -107,8 +132,8 @@ class HomePage extends StatelessWidget {
       bottomNavigationBar: const CustomBottomAppBar(),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {},
-      //   // child: const Icon(Icons.add),
-      //   // backgroundColor: Colors.red,
+      //   child: const Icon(Icons.add),
+      //   backgroundColor: Colors.red,
       // ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
@@ -128,7 +153,7 @@ class FoodCard extends StatelessWidget {
     required this.subtitle,
     required this.rating,
   });
-
+  
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -136,11 +161,15 @@ class FoodCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            imageUrl,
-            height: 100,
-            width: double.infinity,
-            fit: BoxFit.cover,
+          Container(
+
+            alignment: Alignment.center,
+            child: Image.asset(
+              imageUrl,
+              fit: BoxFit.cover,
+              height: 80,
+              width: 80,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -170,25 +199,51 @@ class FoodCard extends StatelessWidget {
   }
 }
 
-class CustomBottomAppBar extends StatelessWidget {
+class CustomBottomAppBar extends StatefulWidget {
   const CustomBottomAppBar({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
+  _CustomBottomAppBarState createState() => _CustomBottomAppBarState();
+}
+
+class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 1:
+        // Navigate to profile page
+        break;
+      case 2:
+        // Handle FAB action
+        break;
+      case 3:
+        // Navigate to chat page
+        break;
+      case 4:
+        // Navigate to favorite page
+        break;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-     return Container(
-      color: Colors.orange,
-      height: 60,
+    return BottomAppBar(
+      shape: const CircularNotchedRectangle(),
+      notchMargin: 6.0,
+      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          IconButton(
-            onPressed: () {}, // router
-            icon: const Icon(Icons.home_outlined),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.person_outline),
-          ),
+          _buildNavItem(Icons.home_outlined, 0),
+          _buildNavItem(Icons.person_outline, 1),
           Container(
             height: 60,
             width: 60,
@@ -205,25 +260,37 @@ class CustomBottomAppBar extends StatelessWidget {
               ],
             ),
             child: const Center(
-              child: Icon(Icons.add, size: 30, color: Colors.white),
+              child: Icon(Icons.add, color: Colors.white),
             ),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.chat_bubble_outline),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.favorite_outline),
-          ),
+          _buildNavItem(Icons.chat_bubble_outline, 3),
+          _buildNavItem(Icons.favorite_outline, 4),
         ],
       ),
     );
   }
-}
 
-void main() {
-  runApp(const MaterialApp(
-    home: HomePage(),
-  ));
+  Widget _buildNavItem(IconData icon, int index) {
+    bool isSelected = _selectedIndex == index;
+    return GestureDetector(
+      onTap: () => _onItemTapped(index),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: isSelected ? Colors.orange : Colors.grey),
+          if (isSelected)
+            Container(
+              margin: const EdgeInsets.only(top: 4),
+              height: 5,
+              width: 5,
+              decoration: const BoxDecoration(
+                color: Colors.orange,
+                shape: BoxShape.circle,
+              ),
+            ),
+        ],
+      ),
+    );
+  }
 }
